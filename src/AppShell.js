@@ -1,7 +1,5 @@
-import React from 'react';
+import {React, lazy, Suspense} from 'react';
 import { Switch, Route, Link } from 'react-router-dom';
-import Navbar from './componentes/navbar/Navbar';
-import Footer from './componentes/Footer/Footer'
 import Home from './pages/home';
 import Produtos from './pages/produtos';
 import Lojas from './pages/lojas';
@@ -10,11 +8,17 @@ import Contato from './pages/contato';
 import Tabela from './componentes/Tabela'
 import './App.css';
 
+const Navbar = lazy(()=> import('./componentes/navbar/Navbar'));
+const Footer = lazy(()=> import('./componentes/Footer/Footer'))
+
 function AppShell() {
   return (
     <div className="App">
       <header>
-        <Navbar/>
+        <Suspense fallback={"Carregando!"}>
+          <Navbar/>
+        </Suspense>
+        
       </header>
       <main>
         <Switch>
@@ -27,7 +31,10 @@ function AppShell() {
       </main>
 
       <footer>
-        <Footer/>
+        <Suspense fallback={"Carregando"}>
+          <Footer/>
+        </Suspense>
+        
       </footer>
       
     </div>
